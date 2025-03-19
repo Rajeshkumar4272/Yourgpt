@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhook Demo</title>
+</head>
+<body>
+    <h2>Webhook Demo</h2>
+    <form id="webhookForm">
+        <label for="sessionId">Session ID:</label>
+        <input type="text" id="sessionId" name="sessionId" readonly>
+        <br><br>
+        <label for="data">Enter Data:</label>
+        <input type="text" id="data" name="data" required>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="responseMessage"></p>
+
+    <script>
+        // Function to extract session ID from URL
+        function getSessionIdFromURL() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            return urlParams.get('ses') || "";
+        }
+
+        // Set session ID in input field
+        document.getElementById("sessionId").value = getSessionIdFromURL();
+
+        document.getElementById("webhookForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const sessionId = document.getElementById("sessionId").value;
+            const data = document.getElementById("data").value;
+            const webhookUrl = "https://api-prod.yourgpt.ai/chatbot/v1/studio/webhook/67c01c50d2053db7492380b5"; // Replace with your actual webhook URL
+            
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ sessionId: sessionId, data: data })
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById("responseMessage").innerText = "Webhook triggered successfully!";
+            })
+            .catch(error => {
+                document.getElementById("responseMessage").innerText = "Error triggering webhook.";
+                console.error("Error:", error);
+            });
+        });
+    </script>
+</body>
+</html>
