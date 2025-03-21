@@ -1,5 +1,4 @@
 const { Builder, By, until } = require('selenium-webdriver');
-const { titleIs } = require('selenium-webdriver/lib/until');
 require('chromedriver');
 
 (async function testYourGpt() {
@@ -9,7 +8,7 @@ require('chromedriver');
         await driver.get('https://yourgpt.ai/');
 
         // Wait for the title to appear
-        await driver.wait(titleIs('YourGPT - Next-Gen AI and GPT Suite for Your Needs'), 5000);
+        await driver.wait(until.titleIs('YourGPT - Next-Gen AI and GPT Suite for Your Needs'), 5000);
 
         // Scroll from top to bottom
         await driver.executeScript('window.scrollTo(0, document.body.scrollHeight);');
@@ -19,14 +18,16 @@ require('chromedriver');
         await driver.executeScript('window.scrollTo(0, 0);');
         await driver.sleep(2000);
 
-        // Click the "Get Started" button
-        await driver.findElement(By.xpath('/html/body/div[1]/div[3]/div/div[3]/div/div/a[1]')).click();
+        // Wait for "Get Started" button and click it
+        let getStartedBtn = await driver.wait(until.elementLocated(By.xpath("//a[contains(text(),'Get Started')]")), 5000);
+        await getStartedBtn.click();
 
-        // Click the link to open the form
-        await driver.findElement(By.xpath('//*[@id="root"]/div/div/div[2]/div[2]/div[1]/div/div[1]/p/a')).click();
+        // Wait for the form link and click it
+        let formLink = await driver.wait(until.elementLocated(By.xpath("//p/a[contains(text(),'form')]")), 5000);
+        await formLink.click();
 
     } catch (error) {
-        console.log(error);
+        console.error("Error encountered:", error);
     } finally {
         // Close the browser
         await driver.quit();
