@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+
+</body>
+<script
+   src="https://widget.yourgpt.ai/script.js"
+   id="yourgpt-chatbot"
+   data-widget="d9b836b7c1356967bb21b41c0cb4ac5be6eae072e244161453242d233349c9d5">
+</script>
+<script>
+    // document on load
+      window.addEventListener("DOMContentLoaded", function() {
+  
+  
+      // Wait for the chatbot to be ready
+      console.log("Chatbot is ready");
+  
+      $yourgptChatbot.on("init", function() {
+  
+          console.log("Chatbot initialized");
+  
+          $yourgptChatbot.set("contact:data", {
+              email: "ankur.delta4infotech@gmail.com",
+              phone:  `+91${8847238244}`,
+              name: 'Ankur saini',
+              ext_user_id: `ee7476c03af98d2ddb8318594c8395111654e7db82f9a6f61b04f4afe19e91c5`,
+              user_hash: "4ce29d8e8867bae5671ffc507d608b2b5a0ec7b84d050ecb72713536c70d707b"
+          });
+          console.log("Contact data set");
+  
+      });
+      $yourgptChatbot.on("error", function() {
+          console.log("Chatbot error");
+      });
+    });
+
+      </script>
+</html>
